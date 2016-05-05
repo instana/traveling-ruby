@@ -10,7 +10,7 @@ function download_and_extract()
 	local regex='\.bz2$'
 
 	run rm -f "$BASENAME"
-	run wget -O "$BASENAME" "$URL"
+	run wget --no-check-certificate -O "$BASENAME" "$URL"
 	if [[ "$URL" =~ $regex ]]; then
 		run tar xjf "$BASENAME"
 	else
@@ -34,7 +34,7 @@ AUTOCONF_VERSION=2.69
 AUTOMAKE_VERSION=1.15
 LIBTOOL_VERSION=2.4.6
 CMAKE_VERSION=3.0.2
-OPENSSL_VERSION=1.0.2f
+OPENSSL_VERSION=1.0.2h
 FFI_VERSION=3.2.1
 SQLITE3_VERSION=3080702
 MYSQL_LIB_VERSION=6.1.5
@@ -140,7 +140,7 @@ echo
 header "Installing OpenSSL"
 if [[ ! -e /usr/local/override/bin/openssl ]]; then
 	download_and_extract openssl-$OPENSSL_VERSION.tar.gz \
-		https://www.openssl.org/source/openssl-$OPENSSL_VERSION.tar.gz
+		https://github.com/develar/fpm-self-contained/releases/download/v1.5.0-1/openssl-1.0.2h.tar.gz
 	echo "Entering openssl-$OPENSSL_VERSION"
 	pushd openssl-$OPENSSL_VERSION >/dev/null
 

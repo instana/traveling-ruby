@@ -7,3 +7,5 @@
 /windows/output
 *.sublime-workspace
 *.tar.gz
+linux/traveling-ruby-gems-*/
+.idea/

@@ -141,6 +141,7 @@ fi
 exec docker run \
 	$TTY_ARGS \
 	--rm \
+        --privileged=true \
 	--cap-add SYS_ADMIN --cap-add SYS_CHROOT \
 	-v "$SELFDIR/internal:/system:ro" \
 	-v "$SELFDIR/../shared:/system_shared:ro" \
