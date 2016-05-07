@@ -110,10 +110,6 @@ function parse_options()
 parse_options "$@"
 RUNTIME_DIR=`cd "$RUNTIME_DIR" && pwd`
 OUTPUT_DIR=`cd "$OUTPUT_DIR" && pwd`
-if [[ ! -e "$RUNTIME_DIR/mock" ]]; then
-	echo "ERROR: runtime directory $RUNTIME_DIR not set up. Please run ./setup-runtime first."
-	exit 1
-fi
 if [[ "$GEMFILE" != "" ]]; then
 	GEMFILE="`absolute_path \"$GEMFILE\"`"
 	if [[ -d "$GEMFILE" ]]; then
@@ -156,6 +152,6 @@ exec docker run \
 	-e "COMPILE=$COMPILE" \
 	-e "SANITY_CHECK_OUTPUT=$SANITY_CHECK_OUTPUT" \
 	-e "DEBUG_SHELL=$DEBUG_SHELL" \
-	phusion/traveling-ruby-builder-$ARCHITECTURE \
+	phusion/traveling-ruby-linux:$ARCHITECTURE \
 	/system/my_init --quiet --skip-runit --skip-startup-files -- \
 	/system/build-ruby

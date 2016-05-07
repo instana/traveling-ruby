@@ -78,9 +78,9 @@ parse_options "$@"
 RUNTIME_DIR=`cd "$RUNTIME_DIR" && pwd`
 
 header "Preparing"
-run mkdir -p "$RUNTIME_DIR/mock"
 
-exec docker run \
+rm -f image.cid
+docker run \
 	--cidfile image.cid \
 	--privileged \
 	-v "$SELFDIR/../shared:/system_shared:ro" \
@@ -92,5 +92,6 @@ exec docker run \
 	/system/setup-runtime
 
 CID=$(cat image.cid)
-exec docker commit $CID phusion/traveling-ruby-builder-$ARCHITECTURE
-exec docker rm $CID
+docker commit $CID phusion/traveling-ruby-linux:$ARCHITECTURE
+docker rm $CID
+rm image.cid
