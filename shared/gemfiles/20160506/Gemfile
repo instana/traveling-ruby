@@ -1,10 +1,21 @@
-#source 'http://production.cf.rubygems.org/'
 source 'https://rubygems.org'
 
+gem 'fast-stemmer'
+gem 'hitimes'
+gem 'redcarpet'
+gem 'snappy'
+gem 'pg'
+gem 'puma', :platforms => :ruby
+gem 'kgio', :platforms => :ruby
+gem 'raindrops', :platforms => :ruby
+gem 'unicorn', :platforms => :ruby
+gem 'curses', :platforms => :ruby
 gem 'nokogiri'
 gem 'sqlite3'
+gem 'mini_portile'
+gem 'mini_portile2'
 gem 'mysql2', :platforms => :ruby
-gem 'json'
+gem 'json', '1.8.3'
 gem 'ffi'
 gem 'bcrypt'
 gem 'yajl-ruby'

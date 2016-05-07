@@ -65,7 +65,7 @@ ARCHITECTURES.each do |arch|
     file "runtime/#{ruby_version}-#{arch}/ok" => ["setup-runtime", "internal/setup-runtime", "internal/setup-runtime-inside-mock"] do
       sh "mkdir -p runtime/#{ruby_version}-#{arch}"
       sh "./setup-runtime -a #{arch} -r #{ruby_version} runtime/#{ruby_version}-#{arch}"
-      sh "touch runtime/#{ruby_version}-#{arch}/ok"
+      touch "runtime/#{ruby_version}-#{arch}/ok"
     end
 
 

@@ -8,4 +8,5 @@
 *.sublime-workspace
 *.tar.gz
 linux/traveling-ruby-gems-*/
+**/shared/**/vendor/
 .idea/
