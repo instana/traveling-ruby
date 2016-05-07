@@ -42,8 +42,8 @@ end
 
 ARCHITECTURES.each do |arch|
   RUBY_VERSIONS.each do |ruby_version|
-    package = "traveling-ruby-#{VERSION}-#{ruby_version}-linux-#{arch}.tar.gz"
-    gem_dir = "traveling-ruby-gems-#{VERSION}-#{ruby_version}-linux-#{arch}"
+    package = "traveling-ruby-#{VERSION}-#{ruby_version}-linux-#{arch}.tar.xz"
+    gem_dir = "#{VERSION}-#{ruby_version}-linux-#{arch}"
 
     task :package => "package:#{ruby_version}:#{arch}"
     task :runtime => "runtime:#{ruby_version}:#{arch}"
@@ -70,11 +70,11 @@ ARCHITECTURES.each do |arch|
 
 
     file(package => "output/#{ruby_version}-#{arch}/bin") do
-      sh "./package -r #{package} output/#{ruby_version}-#{arch}"
+      sh "../shared/package -r #{package} output/#{ruby_version}-#{arch}"
     end
 
     file("#{gem_dir}/ok" => "output/#{ruby_version}-#{arch}/bin") do
-      sh "./package -E #{gem_dir} output/#{ruby_version}-#{arch}"
+      sh "../shared/package -E #{gem_dir} output/#{ruby_version}-#{arch}"
       touch "#{gem_dir}/ok"
     end
 

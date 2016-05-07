@@ -91,27 +91,26 @@ parse_options "$@"
 
 ##########
 
+export XZ_OPT=-9
 
-export GZIP=--best
 load_ruby_info "$BUILD_OUTPUT_DIR"
 NATIVE_GEMS=(`find_gems_containing_native_extensions "$BUILD_OUTPUT_DIR"`)
 
 if [[ "$RUBY_PACKAGE" != "" ]]; then
 	header "Packaging Ruby..."
-	run tar -cf "$RUBY_PACKAGE.tmp" -C "$BUILD_OUTPUT_DIR" \
+	OUT=${RUBY_PACKAGE:0:${#RUBY_PACKAGE} - 3}
+	tar -cf "$OUT" -C "$BUILD_OUTPUT_DIR" \
 		--exclude "include/*" \
 		--exclude "lib/ruby/gems/$RUBY_COMPAT_VERSION/extensions/*" \
 		--exclude "lib/ruby/gems/$RUBY_COMPAT_VERSION/gems/*" \
 		--exclude "lib/ruby/gems/$RUBY_COMPAT_VERSION/specifications/*" \
 		--exclude "lib/ruby/gems/$RUBY_COMPAT_VERSION/deplibs/*" \
 		.
-	run tar -rf "$RUBY_PACKAGE.tmp" -C "$BUILD_OUTPUT_DIR" \
+	tar -rf "$OUT" -C "$BUILD_OUTPUT_DIR" \
 		"./lib/ruby/gems/$RUBY_COMPAT_VERSION/gems/bundler-$BUNDLER_VERSION" \
 		"./lib/ruby/gems/$RUBY_COMPAT_VERSION/specifications/bundler-$BUNDLER_VERSION.gemspec" \
 		"./lib/ruby/gems/$RUBY_COMPAT_VERSION/specifications/default"
-	echo "+ gzip --best --no-name -c $RUBY_PACKAGE.tmp > $RUBY_PACKAGE"
-	gzip --best --no-name -c "$RUBY_PACKAGE.tmp" > "$RUBY_PACKAGE"
-	run rm "$RUBY_PACKAGE.tmp"
+	xz --compress --force -9 --extreme "$OUT"
 fi
 
 if [[ "$GEM_NATIVE_EXTENSIONS_DIR" != "" ]]; then
@@ -123,16 +122,16 @@ if [[ "$GEM_NATIVE_EXTENSIONS_DIR" != "" ]]; then
 		run mkdir -p "$GEM_NATIVE_EXTENSIONS_DIR"
 		for GEM_NAME in "${NATIVE_GEMS[@]}"; do
 			GEM_NAME_WITHOUT_VERSION=`echo "$GEM_NAME" | sed -E 's/(.*)-.*/\1/'`
-			run tar -cf "$GEM_NATIVE_EXTENSIONS_DIR/$GEM_NAME.tar" \
+			OUT="$GEM_NATIVE_EXTENSIONS_DIR/$GEM_NAME-$GEM_NATIVE_EXTENSIONS_DIR.tar"
+			run tar -cf "$OUT" \
 				-C "$BUILD_OUTPUT_DIR/lib/ruby/gems" \
 				"$RUBY_COMPAT_VERSION/extensions/$GEM_PLATFORM/$GEM_EXTENSION_API_VERSION/$GEM_NAME"
 			if [[ -e "$BUILD_OUTPUT_DIR/lib/ruby/gems/$RUBY_COMPAT_VERSION/deplibs/$GEM_PLATFORM/$GEM_NAME_WITHOUT_VERSION" ]]; then
-				run tar -rf "$GEM_NATIVE_EXTENSIONS_DIR/$GEM_NAME.tar" \
+				run tar -rf "$OUT" \
 					-C "$BUILD_OUTPUT_DIR/lib/ruby/gems" \
 					"$RUBY_COMPAT_VERSION/deplibs/$GEM_PLATFORM/$GEM_NAME_WITHOUT_VERSION"
 			fi
-			run rm -f "$GEM_NATIVE_EXTENSIONS_DIR/$GEM_NAME.tar.gz"
-			run gzip --best --no-name "$GEM_NATIVE_EXTENSIONS_DIR/$GEM_NAME.tar"
+			xz --compress --force -9 --extreme "$OUT"
 		done
 	fi
 fi
