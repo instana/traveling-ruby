@@ -81,14 +81,16 @@ header "Preparing"
 run mkdir -p "$RUNTIME_DIR/mock"
 
 exec docker run \
-	--rm \
+	--cidfile image.cid \
 	--privileged \
-	-v "$SELFDIR/internal:/system:ro" \
 	-v "$SELFDIR/../shared:/system_shared:ro" \
-	-v "$RUNTIME_DIR/mock:/var/lib/mock" \
 	-e "ARCHITECTURE=$ARCHITECTURE" \
 	-e "RUBY_VERSION=$RUBY_VERSION" \
 	-e "INITIALIZE=$INITIALIZE" \
 	phusion/traveling-ruby-builder \
 	/system/my_init --quiet --skip-runit --skip-startup-files -- \
 	/system/setup-runtime
+
+CID=$(cat image.cid)
+exec docker commit $CID phusion/traveling-ruby-builder-$ARCHITECTURE
+exec docker rm $CID

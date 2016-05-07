@@ -141,11 +141,9 @@ fi
 exec docker run \
 	$TTY_ARGS \
 	--rm \
-    --privileged=true \
+        --privileged \
 	--cap-add SYS_ADMIN --cap-add SYS_CHROOT \
-	-v "$SELFDIR/internal:/system:ro" \
 	-v "$SELFDIR/../shared:/system_shared:ro" \
-	-v "$RUNTIME_DIR/mock:/var/lib/mock" \
 	-v "$OUTPUT_DIR:/output" \
 	"${GEMFILE_MOUNT[@]}" \
 	-e "APP_UID=`id -u`" \
@@ -158,6 +156,6 @@ exec docker run \
 	-e "COMPILE=$COMPILE" \
 	-e "SANITY_CHECK_OUTPUT=$SANITY_CHECK_OUTPUT" \
 	-e "DEBUG_SHELL=$DEBUG_SHELL" \
-	phusion/traveling-ruby-builder \
+	phusion/traveling-ruby-builder-$ARCHITECTURE \
 	/system/my_init --quiet --skip-runit --skip-startup-files -- \
 	/system/build-ruby

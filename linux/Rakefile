@@ -61,9 +61,9 @@ ARCHITECTURES.each do |arch|
     desc "Build binaries for Ruby #{ruby_version} #{arch}"
     task "build:#{ruby_version}:#{arch}" => "output/#{ruby_version}-#{arch}/bin"
 
-
-    file "runtime/#{ruby_version}-#{arch}/ok" => ["setup-runtime", "internal/setup-runtime", "internal/setup-runtime-inside-mock"] do
+    file "runtime/#{ruby_version}-#{arch}/ok" => ["setup-runtime", "internal/setup-runtime", "internal/setup-runtime-inside-mock", "Dockerfile"] do
       sh "mkdir -p runtime/#{ruby_version}-#{arch}"
+      sh "./setup-docker-image"
       sh "./setup-runtime -a #{arch} -r #{ruby_version} runtime/#{ruby_version}-#{arch}"
       touch "runtime/#{ruby_version}-#{arch}/ok"
     end
