@@ -308,10 +308,9 @@ create_wrapper /tmp/ruby/bin/ruby ruby false
 create_wrapper /tmp/ruby/bin/gem gem true
 create_wrapper /tmp/ruby/bin/irb irb true
 create_wrapper /tmp/ruby/bin/rake rake true
-if [[ -e /system/Gemfile ]]; then
-	create_wrapper /tmp/ruby/bin/bundle bundle true
-	create_wrapper /tmp/ruby/bin/bundler bundler true
-fi
+create_wrapper /tmp/ruby/bin/bundle bundle true
+create_wrapper /tmp/ruby/bin/bundler bundler true
+
 echo
 
 if $SANITY_CHECK_OUTPUT; then
