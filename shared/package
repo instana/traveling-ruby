@@ -100,10 +100,6 @@ if [[ "$RUBY_PACKAGE" != "" ]]; then
 	header "Packaging Ruby..."
 	run tar -cf "$RUBY_PACKAGE.tmp" -C "$BUILD_OUTPUT_DIR" \
 		.
-	run tar -rf "$RUBY_PACKAGE.tmp" -C "$BUILD_OUTPUT_DIR" \
-		"./lib/ruby/gems/$RUBY_COMPAT_VERSION/gems/bundler-$BUNDLER_VERSION" \
-		"./lib/ruby/gems/$RUBY_COMPAT_VERSION/specifications/bundler-$BUNDLER_VERSION.gemspec" \
-		"./lib/ruby/gems/$RUBY_COMPAT_VERSION/specifications/default"
 	echo "+ gzip --best --no-name -c $RUBY_PACKAGE.tmp > $RUBY_PACKAGE"
 	gzip --best --no-name -c "$RUBY_PACKAGE.tmp" > "$RUBY_PACKAGE"
 	run rm "$RUBY_PACKAGE.tmp"
