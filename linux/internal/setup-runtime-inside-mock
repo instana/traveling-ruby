@@ -140,7 +140,7 @@ echo
 header "Installing OpenSSL"
 if [[ ! -e /usr/local/override/bin/openssl ]]; then
 	download_and_extract openssl-$OPENSSL_VERSION.tar.gz \
-		https://github.com/develar/fpm-self-contained/releases/download/v1.5.0-1/openssl-1.0.2h.tar.gz
+		https://www.openssl.org/source/openssl-$OPENSSL_VERSION.tar.gz
 	echo "Entering openssl-$OPENSSL_VERSION"
 	pushd openssl-$OPENSSL_VERSION >/dev/null
 
