@@ -4,6 +4,7 @@ gem 'fast-stemmer'
 gem 'hitimes'
 gem 'redcarpet'
 gem 'snappy'
+gem 'berkshelf'
 gem 'pg'
 gem 'puma', :platforms => :ruby
 gem 'kgio', :platforms => :ruby
@@ -17,6 +18,8 @@ gem 'mini_portile2'
 gem 'mysql2', :platforms => :ruby
 gem 'json', '1.8.3'
 gem 'ffi'
+gem 'ffi-yajl'
+gem 'nio4r'
 gem 'bcrypt'
 gem 'yajl-ruby'
 gem 'thin'
