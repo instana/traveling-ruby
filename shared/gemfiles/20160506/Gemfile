@@ -6,6 +6,7 @@ gem 'redcarpet'
 gem 'snappy'
 gem 'berkshelf'
 gem 'pg'
+gem "cassandra-driver", '3.0.3'
 gem 'puma', :platforms => :ruby
 gem 'kgio', :platforms => :ruby
 gem 'raindrops', :platforms => :ruby
