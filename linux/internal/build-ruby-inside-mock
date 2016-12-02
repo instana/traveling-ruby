@@ -60,9 +60,13 @@ for DIR in "$ROOT"/lib/ruby/gems/*/deplibs/*/*; do
 	echo LD_LIBRARY_PATH=\"\$LD_LIBRARY_PATH:$DIR\"
 done
 EOF
+	echo "if [ ! -n \"\$GEM_HOME\" ]; then" >> "$FILE"
 	echo "echo GEM_HOME=\"\$ROOT/lib/ruby/gems/$RUBY_COMPAT_VERSION\"" >> "$FILE"
+	echo "fi" >> "$FILE"
+	echo "if [ ! -n \"\$GEM_PATH\" ]; then" >> "$FILE"
 	echo "echo GEM_PATH=\"\$ROOT/lib/ruby/gems/$RUBY_COMPAT_VERSION\"" >> "$FILE"
-
+	echo "fi" >> "$FILE"
+	
 	cat >> "$FILE" <<EOF
 echo RUBYLIB=\"$LOAD_PATHS\"
 
