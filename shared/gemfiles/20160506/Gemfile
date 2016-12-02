@@ -4,7 +4,6 @@ gem 'fast-stemmer'
 gem 'hitimes'
 gem 'redcarpet'
 gem 'snappy'
-gem 'berkshelf'
 gem 'pg'
 gem "cassandra-driver", '3.0.3'
 gem 'puma', :platforms => :ruby
